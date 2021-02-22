@@ -1,0 +1,51 @@
+{
+  "students": [
+    {
+      "id": 1,
+      "name": "Nguyễn Lam Sơn",
+      "email": "nguyenlamson1609@gmail.com",
+      "gender": 1,
+      "address": "Hà Nội",
+      "class": "Web12",
+      "checked": false
+    },
+    {
+      "id": 2,
+      "name": "Nguyễn Thanh Tra",
+      "email": "congchuabongbong@gmail.com",
+      "gender": 0,
+      "address": "Hải Phòng",
+      "class": "Web02",
+      "checked": false
+    },
+    {
+      "id": 3,
+      "name": "Nguyễn Minh Nguyệt",
+      "email": "xevu@gmail.com",
+      "gender": 0,
+      "address": "Cần Thơ",
+      "class": "Web02",
+      "checked": false
+    },
+    {
+      "name": "aaa",
+      "email": "tra@gmail.com",
+      "gender": 1,
+      "address": "Hà Nội",
+      "class": "Web12",
+      "checked": false,
+      "editting": true,
+      "id": 4
+    },
+    {
+      "name": "sss",
+      "email": "sonyeuphuongdung@gmail.com",
+      "gender": 1,
+      "address": "Hải Phòng",
+      "class": "Web01",
+      "checked": false,
+      "editting": true,
+      "id": 5
+    }
+  ]
+}
