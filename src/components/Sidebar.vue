@@ -52,6 +52,9 @@ export default {};
 
 <style lang="scss" scoped>
 /**New */
+a {
+  text-decoration: none;
+}
 .navbar {
   float: left;
   width: 220px;
@@ -96,6 +99,7 @@ export default {};
   padding-left: 16px;
   line-height: 44px;
   text-decoration: none;
+  cursor: pointer;
 }
 
 a:visited {

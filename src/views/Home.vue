@@ -1,20 +1,28 @@
 <template>
   <div class="content">
     <h2>Tổng quan</h2>
-    <button @click="busClick">Click</button>
+    <BaseButton>
+      <template v-slot:student="{ student }" @click="baseBtnClick"
+        >{{ student.name }} Dz</template
+      >
+      <template v-slot:hello>kkk</template>
+    </BaseButton>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import EventBus from "@/EventBus.js";
-
+import BaseButton from "@/components/BaseButton.vue";
 export default {
   name: "Home",
-  components: {},
+  components: { BaseButton },
   methods: {
     busClick() {
       EventBus.$emit("hello", "i hear you");
+    },
+    baseBtnClick() {
+      console.log("base button click");
     },
   },
 };

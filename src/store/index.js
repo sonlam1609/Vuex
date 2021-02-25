@@ -5,9 +5,6 @@ import student from "./modules/student";
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
-  state: {
-    name: "HAT",
-  },
   modules: {
     student,
   },

@@ -5,11 +5,19 @@ import Home from "../views/Home.vue";
 Vue.use(VueRouter);
 
 const routes = [
+  /**
+   * router mặc định
+   * Created BY: NLSON (25/02/2021)
+   */
   {
     path: "/",
     name: "Index",
     component: Home,
   },
+  /**
+   * router students
+   * Created BY: NLSON (25/02/2021)
+   */
   {
     path: "/students",
     name: "Students",
@@ -48,17 +56,15 @@ const routes = [
     name: "User",
     component: () => import(/* webpackChunkName: "User" */ "../views/User.vue"),
   },
+  /**
+   * router 404
+   * Created BY: NLSON (25/02/2021)
+   */
   {
     path: "*",
     name: "404",
     component: () => import(/* webpackChunkName: "404" */ "../views/404.vue"),
   },
-  // {
-  //   path: "/about",
-  //   name: "About",
-  //   component: () =>
-  //     import(/* webpackChunkName: "about" */ "../views/About.vue")
-  // }
 ];
 
 const router = new VueRouter({

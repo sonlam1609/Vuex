@@ -9,11 +9,11 @@
         placeholder="Tìm kiếm theo tên"
       />
       <input
-        style="background-color: rgb(255 56 56); color: #302a2a"
+        style="background-color: rgb(255 56 56); color: white"
         class="btn-cancel"
         type="button"
         value="Xóa"
-        @click="deleteCheck"
+        @click="deleteStudents"
       />
     </div>
     <table>
@@ -27,6 +27,7 @@
               @click="checkedAll"
             />
           </th>
+          <th style="text-align: center">Code</th>
           <th>Họ tên</th>
           <th>Email</th>
           <th style="text-align: center">Giới tính</th>
@@ -39,15 +40,16 @@
           v-for="(stu, index) in studentFilter"
           :key="index"
           @click="oneClick(stu)"
-          @dblclick="dblClick(index, stu)"
+          @dblclick="dblClick(stu.id)"
         >
           <td><input type="checkbox" name="name1" v-model="stu.checked" /></td>
+          <td style="text-align: center">{{ stu.id }}</td>
           <td>{{ stu.name }}</td>
           <td>{{ stu.email }}</td>
           <td v-if="stu.gender == 1" style="text-align: center">Nam</td>
           <td v-else style="text-align: center">Nữ</td>
           <td>{{ stu.address }}</td>
-          <td>{{ stu.class }}</td>
+          <td>{{ stu.classroom }}</td>
         </tr>
       </tbody>
     </table>
@@ -61,13 +63,12 @@
 
 <script>
 //library
-// import axios from "axios";
-import EventBus from "@/EventBus.js";
+// import EventBus from "@/EventBus.js";
 //components
 import ContentHeader from "@/components/ContentHeader.vue";
 import Form from "@/components/Form.vue";
 
-import { mapActions, mapState } from "vuex";
+import { mapGetters } from "vuex";
 
 export default {
   name: "Students",
@@ -83,80 +84,104 @@ export default {
       checkAll: "",
       /**bật tắt from */
       formAdd: true,
-      /**value */
       /**Phương thức */
       method: "POST",
       /**Lấy vị trí cần sửa */
       indexKey: 0,
-      // students: [],
     };
   },
   methods: {
-    /**Lấy tất cả dữ liệu */
     /**Check tất cả các dòng */
-    ...mapActions("student", ["getAllStudent"]),
     checkedAll() {
       if (!this.checkAll) {
-        this.students.forEach((stu) => {
+        this.student.forEach((stu) => {
           stu.checked = true;
         });
       } else {
-        this.students.forEach((stu) => {
+        this.student.forEach((stu) => {
           stu.checked = false;
         });
       }
     },
-    /**Xóa dòng được chọn */
-    deleteCheck: function () {},
-    /**Mở form */
+    /**Xóa dòng được chọn
+     * CreatedBy: NLSon(24/02/2021)
+     */
+    deleteStudents: function () {
+      console.log("delete");
+      this.student.forEach((student) => {
+        if (student.checked == true) {
+          this.$store.dispatch("student/deleteStudents", student.id);
+        }
+      });
+    },
+    /**Mở form
+     * CreatedBy: NLSon(24/02/2021)
+     */
     openForm: function () {
       this.method = "POST";
       this.formAdd = false;
-      EventBus.$emit("busOpenClick");
+      this.currentStudent.name = "";
+      this.currentStudent.email = "";
+      this.currentStudent.gender = "1";
+      this.currentStudent.classroom = "";
+      this.currentStudent.address = "";
     },
-    /**Đóng form */
+    /**Đóng form
+     * CreatedBy: NLSon(24/02/2021)
+     */
     closeForm: function () {
       this.formAdd = true;
     },
-    /**Đánh dấu dòng */
+    /**Đánh dấu dòng
+     * CreatedBy: NLSon(24/02/2021)
+     */
     oneClick(stu) {
+      this.indexKey = stu.id;
+      console.log(this.indexKey);
+      this.$store.dispatch("student/getStudentById", this.indexKey);
       return stu.checked ? (stu.checked = false) : (stu.checked = true);
     },
-    /**Mở form khi double click */
-    dblClick(index, stu) {
+    /**Mở form khi double click
+     * CreatedBy: NLSon(24/02/2021)
+     */
+    dblClick() {
       this.method = "PUT";
       this.formAdd = false;
-      this.indexKey = index;
-      EventBus.$emit(
-        "busDblClick",
-        stu.name,
-        stu.email,
-        stu.gender,
-        stu.address,
-        stu.class
-      );
     },
-    changeStudent: function () {},
+    /**
+     * Thay đổi dữ liệu sinh viên
+     * CreatedBy: NLSon(24/02/2021)
+     */
+    changeStudent: function (student) {
+      if (this.method == "POST") {
+        this.$store.dispatch("student/pushStudent", student);
+      } else {
+        let payload = { student: student, id: this.indexKey };
+        this.$store.dispatch("student/updateStudent", payload);
+      }
+      this.formAdd = true;
+    },
   },
   beforeMount() {
-    debugger;
     this.$store.dispatch("student/getAllStudent");
-    // this.getAllStudent();
   },
   computed: {
-    // ...mapGetters("student", {
-    //   student: "allStudent",
-    // }),
-    ...mapState("student", {
-      allStudent: "students",
+    ...mapGetters("student", {
+      student: "allStudent",
+      currentStudent: "currentStudent",
     }),
+
+    /**
+     * Lọc dữ liệu
+     * CreatedBy: NLSon(24/02/2021)
+     */
     studentFilter: function () {
       if (this.sreachText.trim()) {
-        return this.allStudent.filter(
+        return this.student.filter(
           (stu) => stu.name.search(this.sreachText) >= 0
         );
       } else {
-        return this.allStudent;
+        return this.student;
       }
     },
   },
@@ -164,6 +189,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.btn-cancel {
+  position: absolute;
+  right: 16px;
+  width: 74px;
+}
 .content {
   position: absolute;
   top: 49px;

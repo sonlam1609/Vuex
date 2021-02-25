@@ -13,8 +13,8 @@
           <input
             class="infoStu"
             type="text"
-            v-model="fullname"
             placeholder="Họ và tên"
+            v-model="currentStudent.name"
           />
         </div>
       </div>
@@ -29,7 +29,7 @@
             id="email"
             name="email"
             placeholder="Email.."
-            v-model="email"
+            v-model="currentStudent.email"
           />
         </div>
       </div>
@@ -44,7 +44,7 @@
             name="gender"
             value="1"
             checked="checked"
-            v-model="gender"
+            v-model="currentStudent.gender"
           />
           <label for="male">Nam</label>
           <input
@@ -52,7 +52,7 @@
             id="female"
             name="gender"
             value="0"
-            v-model="gender"
+            v-model="currentStudent.gender"
           />
           <label for="female">Nữ</label>
         </div>
@@ -62,7 +62,7 @@
           <label for="country">Quê quán</label>
         </div>
         <div class="col-75">
-          <select id="country" name="country" v-model="address">
+          <select id="country" name="country" v-model="currentStudent.address">
             <option value="Hà Nội">Hà Nội</option>
             <option value="Hải Phòng">Hải Phòng</option>
             <option value="Cần Thơ">Cần Thơ</option>
@@ -74,7 +74,7 @@
           <label for="class">Lớp</label>
         </div>
         <div class="col-75">
-          <select id="class" name="class" v-model="classroom">
+          <select id="class" name="class" v-model="currentStudent.classroom">
             <option value="Web12">Web12</option>
             <option value="Web01">Web01</option>
             <option value="Web02">Web02</option>
@@ -89,78 +89,46 @@
 </template>
 
 <script>
+// import EventBus from "@/EventBus.js";
+import { mapGetters } from "vuex";
 export default {
-  // props: ["fullname", "email", "gender", "address", "classroom"],
   data() {
     return {};
   },
-
   methods: {
-    setValue() {
-      // this.$store.state.student.fullname = this.fullname;
-      // this.$store.state.student.email = this.email;
-      // this.$store.state.student.gender = this.gender;
-      // this.$store.state.student.address = this.address;
-      // this.$store.state.student.classroom = this.classroom;
-    },
+    /**
+     * Đóng form
+     * Created By: NLSON (25/02/2021)
+     */
     closedForm: function () {
       this.$emit("closedForm");
     },
+    /**
+     * Thay đổi dữ liệu
+     * Created By: NLSON (25/02/2021)
+     */
     changeStudent: function () {
-      var check = this.validate();
-      this.setValue();
-      this.$emit("changedStudent", check);
+      var student = {
+        name: this.currentStudent.name,
+        email: this.currentStudent.email,
+        gender: this.currentStudent.gender,
+        address: this.currentStudent.address,
+        classroom: this.currentStudent.classroom,
+        checked: false,
+      };
+      this.$emit("changedStudent", student);
     },
-    validate() {
-      if (this.email.trim()) {
-        return true;
-      }
-      return false;
-    },
   },
-  created() {
-    // EventBus.$on(
-    //   "busDblClick",
-    //   (fullname, email, gender, address, classroom) => {
-    //     (this.fullname = fullname),
-    //       (this.email = email),
-    //       (this.gender = gender),
-    //       (this.address = address),
-    //       (this.classroom = classroom);
-    //   }
-    // );
-    // EventBus.$on("busOpenClick", () => {
-    //   (this.fullname = ""),
-    //     (this.email = ""),
-    //     (this.gender = "1"),
-    //     (this.address = ""),
-    //     (this.classroom = "");
-    // });
-  },
-  destroyed() {
-    // Stop listening the event hello with handler
-    // EventBus.$off(
-    //   "busDblClick",
-    //   (fullname, email, gender, address, classroom) => {
-    //     (this.fullname = fullname),
-    //       (this.email = email),
-    //       (this.gender = gender),
-    //       (this.address = address),
-    //       (this.classroom = classroom);
-    //   }
-    // );
-    // EventBus.$on("busOpenClick", () => {
-    //   (this.fullname = ""),
-    //     (this.email = ""),
-    //     (this.gender = "1"),
-    //     (this.address = ""),
-    //     (this.classroom = "");
-    // });
-  },
+  created() {},
+  destroyed() {},
   computed: {
-    // nameCall: function () {
-    //   return this.fullname;
-    // },
+    /**
+     * Lấy sinh viên trong Store
+     * Created By: NLSON (25/02/2021)
+     */
+    ...mapGetters("student", {
+      currentStudent: "currentStudent",
+    }),
   },
 };
 </script>
@@ -211,7 +179,7 @@ input[type="checkbox"]:hover {
   border-radius: 5px;
   background-color: #90fe95;
   padding: 40px 20px;
-  width: calc(50% - 400px);
+  width: 350px;
   position: absolute;
   top: calc(50% - 150px);
   left: calc(50% - 250px);
@@ -246,7 +214,7 @@ input[type="checkbox"]:hover {
   border: none;
   outline: none;
   cursor: pointer;
-  background-image: url(/src/img/x.svg);
+  background-image: url("~@/assets/x.svg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: 20px;
