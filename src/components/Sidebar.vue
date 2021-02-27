@@ -7,7 +7,7 @@
           style="width: 100%"
           class="logo"
           alt="Vue logo"
-          src="../assets/unnamed.png"
+          src="../assets/images/unnamed.png"
         />
       </div>
     </div>

@@ -43,7 +43,6 @@
             id="male"
             name="gender"
             value="1"
-            checked="checked"
             v-model="currentStudent.gender"
           />
           <label for="male">Nam</label>
@@ -82,6 +81,21 @@
         </div>
       </div>
       <div class="row">
+        <div class="col-25">
+          <label for="email">Ngày sinh</label>
+        </div>
+        <div class="col-75">
+          <input
+            class="infoStu"
+            type="date"
+            id="email"
+            name="email"
+            placeholder="Email.."
+            v-model="currentStudent.dob"
+          />
+        </div>
+      </div>
+      <div class="row">
         <input type="button" value="Lưu" @click="changeStudent" />
       </div>
     </div>
@@ -114,12 +128,12 @@ export default {
         gender: this.currentStudent.gender,
         address: this.currentStudent.address,
         classroom: this.currentStudent.classroom,
+        dob: this.currentStudent.dob,
         checked: false,
       };
       this.$emit("changedStudent", student);
     },
   },
-  created() {},
   destroyed() {},
   computed: {
     /**
@@ -177,7 +191,7 @@ input[type="checkbox"]:hover {
 }
 .container {
   border-radius: 5px;
-  background-color: #90fe95;
+  background-color: #fff;
   padding: 40px 20px;
   width: 350px;
   position: absolute;
@@ -214,7 +228,7 @@ input[type="checkbox"]:hover {
   border: none;
   outline: none;
   cursor: pointer;
-  background-image: url("~@/assets/x.svg");
+  background-image: url("~@/assets/images/x.svg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: 20px;

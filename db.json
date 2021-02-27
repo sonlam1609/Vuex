@@ -11,7 +11,7 @@
     },
     {
       "name": "Nguyễn Hải Ninh",
-      "email": "sonyeuphuongdung@gmail.com11",
+      "email": "sonyeuphuongdung@gmail.com",
       "gender": "1",
       "address": "Hải Phòng",
       "classroom": "Web12",
@@ -42,6 +42,7 @@
       "gender": "0",
       "address": "Cần Thơ",
       "classroom": "Web02",
+      "dob": "2021-02-05",
       "checked": false,
       "id": 7
     },
@@ -51,26 +52,9 @@
       "gender": "1",
       "address": "Cần Thơ",
       "classroom": "Web02",
+      "dob": "2021-02-04",
       "checked": false,
       "id": 8
-    },
-    {
-      "name": "bbbbb",
-      "email": "tra@gmail.com",
-      "gender": "0",
-      "address": "Hải Phòng",
-      "classroom": "Web01",
-      "checked": false,
-      "id": 9
-    },
-    {
-      "name": "aaa",
-      "email": "tra@gmail.com",
-      "gender": "0",
-      "address": "Hải Phòng",
-      "classroom": "Web01",
-      "checked": false,
-      "id": 10
     }
   ]
 }

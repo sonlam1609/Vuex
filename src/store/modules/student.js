@@ -71,7 +71,7 @@ export default {
       axios
         .post("http://localhost:3000/students", student)
         .then(function(response) {
-          console.log(response);
+          student.id = response.data.id;
           commit("pushStudent", student);
         })
         .catch(function(error) {

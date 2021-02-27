@@ -27,12 +27,13 @@
               @click="checkedAll"
             />
           </th>
-          <th style="text-align: center">Code</th>
+          <th>ID</th>
           <th>Họ tên</th>
           <th>Email</th>
           <th style="text-align: center">Giới tính</th>
           <th>Quê quán</th>
           <th>Lớp</th>
+          <th>Ngày sinh</th>
         </tr>
       </thead>
       <tbody ref="tbody">
@@ -42,14 +43,18 @@
           @click="oneClick(stu)"
           @dblclick="dblClick(stu.id)"
         >
-          <td><input type="checkbox" name="name1" v-model="stu.checked" /></td>
-          <td style="text-align: center">{{ stu.id }}</td>
+          <td><input type="checkbox" v-model="stu.checked" /></td>
+          <td>{{ stu.id }}</td>
           <td>{{ stu.name }}</td>
           <td>{{ stu.email }}</td>
           <td v-if="stu.gender == 1" style="text-align: center">Nam</td>
           <td v-else style="text-align: center">Nữ</td>
           <td>{{ stu.address }}</td>
           <td>{{ stu.classroom }}</td>
+          <td v-if="stu.dob">
+            {{ stu.dob | moment }}
+          </td>
+          <td v-else></td>
         </tr>
       </tbody>
     </table>
@@ -66,9 +71,10 @@
 // import EventBus from "@/EventBus.js";
 //components
 import ContentHeader from "@/components/ContentHeader.vue";
-import Form from "@/components/Form.vue";
+import Form from "@/components/student/Form.vue";
 
 import { mapGetters } from "vuex";
+import moment from "moment";
 
 export default {
   name: "Students",
@@ -90,6 +96,11 @@ export default {
       indexKey: 0,
     };
   },
+  filters: {
+    moment: function (date) {
+      return moment(date).format("DD/MM/YYYY");
+    },
+  },
   methods: {
     /**Check tất cả các dòng */
     checkedAll() {
@@ -108,11 +119,13 @@ export default {
      */
     deleteStudents: function () {
       console.log("delete");
-      this.student.forEach((student) => {
-        if (student.checked == true) {
-          this.$store.dispatch("student/deleteStudents", student.id);
-        }
-      });
+      if (confirm("Bạn chắc chắn sẽ xóa?")) {
+        this.student.forEach((student) => {
+          if (student.checked == true) {
+            this.$store.dispatch("student/deleteStudents", student.id);
+          }
+        });
+      }
     },
     /**Mở form
      * CreatedBy: NLSon(24/02/2021)

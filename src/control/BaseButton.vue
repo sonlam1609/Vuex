@@ -1,11 +1,11 @@
 <template>
   <div class="bs-button">
-    <button>
+    <button @click="buttonClick">
+      <slot name="icon" class="icon"></slot>
       <slot name="student" v-bind:student="student">{{ student.name }}</slot>
     </button>
-    <p><slot name="hello">Xin chào</slot></p>
   </div>
-</template>
+</template> 
   
 <script>
 export default {
@@ -17,6 +17,11 @@ export default {
       },
     };
   },
+  methods: {
+    buttonClick() {
+      this.$emit("button-Click", "something in base");
+    },
+  },
 };
 </script>
 
@@ -24,7 +29,7 @@ export default {
 button {
   background-color: #4caf50;
   height: 40px;
-  width: 55px;
+  width: 90px;
   border: none;
   border-radius: 5px;
   cursor: pointer;

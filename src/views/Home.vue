@@ -1,22 +1,33 @@
 <template>
   <div class="content">
     <h2>Tổng quan</h2>
-    <BaseButton>
-      <template v-slot:student="{ student }" @click="baseBtnClick"
-        >{{ student.name }} Dz</template
-      >
-      <template v-slot:hello>kkk</template>
+    <BaseButton @button-Click="homeClick">
+      <i slot="icon" class="fa fa-home icon"></i>
+      <template v-slot:student="{ student }" @click="baseBtnClick">{{
+        student.name
+      }}</template>
     </BaseButton>
+    <BaseInput placeholder="Your Name" v-model="name" label="Họ và tên">
+      <i slot="icon" class="fa fa-home icon"></i>
+    </BaseInput>
+    <p>{{ name }}</p>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import EventBus from "@/EventBus.js";
-import BaseButton from "@/components/BaseButton.vue";
+import BaseButton from "@/control/BaseButton.vue";
+import BaseInput from "@/control/BaseInput.vue";
+
 export default {
   name: "Home",
-  components: { BaseButton },
+  components: { BaseButton, BaseInput },
+  data() {
+    return {
+      name: "",
+    };
+  },
   methods: {
     busClick() {
       EventBus.$emit("hello", "i hear you");
@@ -24,11 +35,18 @@ export default {
     baseBtnClick() {
       console.log("base button click");
     },
+    homeClick(value) {
+      console.log(value);
+    },
   },
+  computed: {},
 };
 </script>
 
 <style lang="scss" scoped>
+.icon {
+  padding-right: 5px;
+}
 .content {
   position: absolute;
   top: 49px;
